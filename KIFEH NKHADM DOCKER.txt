@@ -1,0 +1,36 @@
+1/ khadem docker desktop w khalih yemchi
+
+# Docker maye9belch adresse localhost donc lezm nrodoha 0.0.0.0 
+
+2/ emchi el server.js fi blaset process.env.SERVERURL rodha .DOCKERSERVERURL
+
+# Docker maye9belch @ localhost lel DB zeda lezm twali esm el image mongo eli bech nasn3oha
+mawjouda fi docker-compose l'image esmha "mongo"
+
+3/ emchi el config/db.js fi blaset process.env.DBURL rodha .DOCKERDBURL
+
+# docker-compose : 
+ bech container web w container mongo iconnectiw ma baadhhom lezm fama "Network" f docker-compose 
+samineha skeleton
+     
+networks:
+ skeleton:
+
+bech nkhabiw les images f server lezm volume lel server (media:/media)
+w bech tkhabi les données mta DB bech maydhi3ouch kif nsakro docker-compose w naawdo nhelo (database/data)
+lezm volume lel base
+     
+volumes:
+  database:
+  media:
+
+4/ f vscode ekteb "docker-compose build"
+
+5/ baad "docker-compose up" w staneh
+
+6/ jareb req post localhost:9095/game b form-data 
+       Name : FIFA2022 (min 5)
+       Year : 2022 (lezm numeric)
+       Image : 7ot ay fichier 
+
+7/ telkaha taswira f /media

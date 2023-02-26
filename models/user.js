@@ -1,81 +1,39 @@
-import { Long } from "bson";
-import mongoose from "mongoose";
-const { Schema, model } = mongoose;
+import mongoose, { Schema } from"mongoose";
 
-const miniUser = {
-  FirstName: { type: String },
-  LastName: { type: String },
-  Tel: { type: String },
-  Email: { type: String },
-  ProfilePhoto: { type: String },
-};
-
-const userSchema = new Schema(
+const userSchema=new Schema(
   {
-    FirstName: {
+    userName:{
+      type:String,
+      require:true
+    },
+    email:{
+      type:String,
+      require:true
+    },
+    password:{
+      type:String
+    },
+    token:{
+      type:String
+    },
+    ProfilePhoto:{
+      type:String
+    },
+    resetTokens:{
+      type:String,
+      default:""
+    },
+    role: {
       type: String,
+      enum: ["developer", "tester", "admin"],
+      default: "developer",
     },
-    LastName: {
+    OTPReset: {
       type: String,
-    },
-    Age: {
-      type: String,
-    },
-    Gender: {
-      type: String,
-    },
-    Country: {
-      type: String,
-    },
-    Tel: {
-      type: String,
-    },
-    Email: {
-      type: String,
-    },
-    Password: {
-      type: String,
-    },
-    Role: {
-      type: String,
-    },
-    ProfilePhoto: {
-      type: String,
-    },
-    FaintsPerDay: {
-      type: String,
-    },
-    AgeWhenDiagnosed: {
-      type: String,
-    },
-    Location: {
-      type: String,
-    },
-    Verified: {
-      default: false,
-      type: Boolean,
-    },
-    vString: { type: String },
-    Token: {
-      type: String,
-    },
-    Patients: [
-      {
-        type: miniUser,
-      },
-    ],
-    Guardians: [
-      {
-        type: miniUser,
-      },
-    ],
-  },
-
-  {
-    timestamps: true,
+      default:null
+    }
   }
 );
+const User=mongoose.model("user",userSchema);
+export{User};
 
-const User = mongoose.model("user", userSchema);
-
-export { User };

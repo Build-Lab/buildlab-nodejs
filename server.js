@@ -1,35 +1,27 @@
 import express from "express";
-import mongoose from "mongoose";
+
 import cors from "cors";
+import bodyParser from "body-parser";
 import * as dotenv from "dotenv";
-import userRoutes from "./routes/userRoutes.js";
-import faintRoutes from "./routes/faintRoutes.js";
+import userRoutes from "./routes/user.js";
+import connectDb from "./config/db.js";
 
 const app = express();
-
 dotenv.config();
 const hostname = process.env.DEVURL;
-const port = process.env.PORT;
-const databaseName = process.env.DBNAME;
-const databaseURL = process.env.DBURL;
-mongoose.set("debug", true);
-mongoose.Promise = global.Promise;
+const port = process.env.PORT||8080;
 
-mongoose
-  .connect(`mongodb://${databaseURL}/${databaseName}`)
-  .then(() => {
-    console.log(`Connected to database`);
-  })
-  .catch((err) => {
-    console.log(err);
-  });
+//Connexion lel base fi config/db.js
+connectDb();
 
 app.use(cors());
+app.use("/media", express.static("media"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 app.use("/user", userRoutes);
-app.use("/faint", faintRoutes);
 
+// npm run dev bech texecuti
 app.listen(port, hostname, () => {
-  console.log(`Server running`);
+  console.log(`Server running on ${hostname}:${port}`);
 });
